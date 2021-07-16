@@ -41,7 +41,7 @@ func (s UserRoutes) Setup() {
 		api.GET("/user/:id", s.userController.GetOneUser)
 		api.POST("/user", s.userController.SaveUser)
 		api.PUT("/user/:id",
-			s.uploadMiddleware.Push(s.uploadMiddleware.Config().ThumbEnable(true)).Handle(),
+			s.uploadMiddleware.Push(s.uploadMiddleware.Config().ThumbEnable(true).Webp(true)).Handle(),
 			s.userController.UpdateUser,
 		)
 		api.DELETE("/user/:id", s.userController.DeleteUser)

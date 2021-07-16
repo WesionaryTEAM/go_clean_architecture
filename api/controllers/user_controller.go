@@ -6,6 +6,7 @@ import (
 	"clean-architecture/models"
 	"clean-architecture/services"
 	"clean-architecture/utils"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -56,6 +57,12 @@ func (u UserController) GetUser(c *gin.Context) {
 
 // SaveUser saves the user
 func (u UserController) SaveUser(c *gin.Context) {
+	// user := models.User{
+	// 	Age:   1,
+	// 	Email: "dineshsilwal@gmail.com",
+	// 	Name:  "Dinesh Silwal",
+	// }
+
 	user := models.User{}
 
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -99,6 +106,8 @@ func (u UserController) UpdateUser(c *gin.Context) {
 	}
 
 	metadata, _ := c.MustGet(constants.File).(lib.UploadedFiles)
+	fmt.Println("---->")
+	fmt.Println(metadata)
 	user.ProfilePic = lib.SignedURL(metadata.GetFile("file").URL)
 
 	if err := u.service.UpdateUser(user); err != nil {
